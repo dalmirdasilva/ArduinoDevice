@@ -1,3 +1,3 @@
-# Arduino Memory Driver
+# Arduino Device Driver
 
 [Documentation.pdf](Documentation.pdf)
