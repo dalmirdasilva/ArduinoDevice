@@ -28,7 +28,7 @@
 								<option id="de.innot.avreclipse.compiler.option.optimize.1547467161" name="Optimization Level" superClass="de.innot.avreclipse.compiler.option.optimize" value="de.innot.avreclipse.compiler.optimize.size" valueType="enumerated"/>
 								<inputType id="de.innot.avreclipse.compiler.winavr.input.1288787997" name="C Source Files" superClass="de.innot.avreclipse.compiler.winavr.input"/>
 							</tool>
-							<tool id="de.innot.avreclipse.tool.cppcompiler.lib.release.894820776" name="AVR C++ Compiler" superClass="de.innot.avreclipse.tool.cppcompiler.lib.release">
+							<tool command="avr-g++ -std=c++11" id="de.innot.avreclipse.tool.cppcompiler.lib.release.894820776" name="AVR C++ Compiler" superClass="de.innot.avreclipse.tool.cppcompiler.lib.release">
 								<option id="de.innot.avreclipse.cppcompiler.option.debug.level.399856021" name="Generate Debugging Info" superClass="de.innot.avreclipse.cppcompiler.option.debug.level" value="de.innot.avreclipse.cppcompiler.option.debug.level.none" valueType="enumerated"/>
 								<option id="de.innot.avreclipse.cppcompiler.option.optimize.180013168" name="Optimization Level" superClass="de.innot.avreclipse.cppcompiler.option.optimize" value="de.innot.avreclipse.cppcompiler.optimize.size" valueType="enumerated"/>
 								<option id="de.innot.avreclipse.cppcompiler.option.incpath.1279629465" name="Include Paths (-I)" superClass="de.innot.avreclipse.cppcompiler.option.incpath" valueType="includePath">
