@@ -10,15 +10,15 @@
 #define __ARDUINO_DRIVER_DEVICE_H__ 1
 
 class Device {
-    
+
 public:
-    
+
     /**
      * Public constructor
      * 
      * @param address       The wire address.
      */
-     Device();
- };
+    Device();
+};
 
 #endif /* __ARDUINO_DRIVER_DEVICE_H__ */

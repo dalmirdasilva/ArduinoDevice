@@ -9,11 +9,9 @@
 #ifndef __ARDUINO_DRIVER_WIRED_DEVICE_H__
 #define __ARDUINO_DRIVER_WIRED_DEVICE_H__ 1
 
-#include <Wire.h>
-
 class WiredDevice {
     
-    unsigned char address;
+    unsigned char deviceAddress;
     
 public:
     
@@ -22,21 +20,21 @@ public:
      * 
      * @param address       The wire address.
      */
-     WiredDevice(unsigned char address);
+     WiredDevice(unsigned char deviceAddress);
      
      /**
       * Gets the device address.
       * 
       * @return address
       */ 
-     unsigned char getAddress();
+     unsigned char getDeviceAddress();
      
      /**
       * Sets the device address.
       * 
       * @param address      The device address.
       */
-     void setAddress(unsigned char address);
+     void setDeviceAddress(unsigned char deviceAddress);
 };
 
 #endif /* __ARDUINO_DRIVER_WIRED_DEVICE_H__ */

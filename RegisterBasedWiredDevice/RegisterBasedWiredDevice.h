@@ -11,10 +11,10 @@
 
 #include <WiredDevice.h>
 
-class RegisterBasedWiredDevice : public WiredDevice {
+class RegisterBasedWiredDevice: public WiredDevice {
 
     const static unsigned char MAX_RETRIES_ON_READING = 10;
-    
+
 public:
 
     /**
@@ -22,8 +22,8 @@ public:
      * 
      * @param address       The wire address.
      */
-     RegisterBasedWiredDevice(unsigned char address);
-    
+    RegisterBasedWiredDevice(unsigned char address);
+
     /**
      * Configures a register.
      *
@@ -31,8 +31,9 @@ public:
      * @param mask          The mask to be used.
      * @param d             The value to be used.
      */
-    void configureRegisterBits(unsigned char reg, unsigned char mask, unsigned char d);
-    
+    void configureRegisterBits(unsigned char reg, unsigned char mask,
+            unsigned char d);
+
     /**
      * Writes a value to a register.
      *
@@ -40,7 +41,7 @@ public:
      * @param d             The value to be used.
      */
     unsigned char writeRegister(unsigned char reg, unsigned char d);
-    
+
     /**
      * Reades a value from a register.
      *

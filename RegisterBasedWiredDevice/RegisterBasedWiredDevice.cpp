@@ -1,11 +1,14 @@
-
 #include <Arduino.h>
+#include <Wire.h>
 #include "RegisterBasedWiredDevice.h"
 
-RegisterBasedWiredDevice::RegisterBasedWiredDevice(unsigned char address) : WiredDevice(address) {
+RegisterBasedWiredDevice::RegisterBasedWiredDevice(
+        unsigned char address) :
+        WiredDevice(address) {
 }
 
-void RegisterBasedWiredDevice::configureRegisterBits(unsigned char reg, unsigned char mask, unsigned char d) {
+void RegisterBasedWiredDevice::configureRegisterBits(unsigned char reg,
+        unsigned char mask, unsigned char d) {
     unsigned char n;
     n = readRegister(reg);
     n &= ~(mask);
@@ -13,8 +16,9 @@ void RegisterBasedWiredDevice::configureRegisterBits(unsigned char reg, unsigned
     writeRegister(reg, n);
 }
 
-unsigned char RegisterBasedWiredDevice::writeRegister(unsigned char reg, unsigned char d) {
-    Wire.beginTransmission(getAddress());
+unsigned char RegisterBasedWiredDevice::writeRegister(unsigned char reg,
+        unsigned char d) {
+    Wire.beginTransmission(getDeviceAddress());
     Wire.write(reg);
     Wire.write(d);
     return Wire.endTransmission();
@@ -22,13 +26,13 @@ unsigned char RegisterBasedWiredDevice::writeRegister(unsigned char reg, unsigne
 
 int RegisterBasedWiredDevice::readRegister(unsigned char reg) {
     char tries = MAX_RETRIES_ON_READING;
-    Wire.beginTransmission(getAddress());
+    Wire.beginTransmission(getDeviceAddress());
     Wire.write(reg);
     char status = Wire.endTransmission(false);
     if (status != 0) {
         return -(status);
     }
-    Wire.requestFrom(getAddress(), (unsigned char) 1);
+    Wire.requestFrom(getDeviceAddress(), (unsigned char) 1);
     while (!Wire.available() && --tries > 0) {
         delayMicroseconds(1);
     }

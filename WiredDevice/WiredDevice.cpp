@@ -1,14 +1,13 @@
-
 #include "WiredDevice.h"
 
-WiredDevice::WiredDevice(unsigned char address) {
-    this->address = address;
+WiredDevice::WiredDevice(unsigned char address)
+        : deviceAddress(deviceAddress) {
 }
 
-unsigned char WiredDevice::getAddress() {
-    return address;
+unsigned char WiredDevice::getDeviceAddress() {
+    return deviceAddress;
 }
 
-void WiredDevice::setAddress(unsigned char address) {
-    this->address = address;
+void WiredDevice::setDeviceAddress(unsigned char deviceAddress) {
+    this->deviceAddress = deviceAddress;
 }
