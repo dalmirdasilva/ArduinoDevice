@@ -1,6 +1,6 @@
 #include "WiredDevice.h"
 
-WiredDevice::WiredDevice(unsigned char address)
+WiredDevice::WiredDevice(unsigned char deviceAddress)
         : deviceAddress(deviceAddress) {
 }
 

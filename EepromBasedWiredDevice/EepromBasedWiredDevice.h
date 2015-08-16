@@ -17,14 +17,14 @@ class EepromBasedWiredDevice: public WiredDevice {
 
     const static char MAX_RETRIES_ON_READING = 0x7f;
 
-    unsigned char addressSize;
-    bool endianness;
+    char addressSize;
+    unsigned char endianness;
 
 public:
 
     enum {
         LITTLE_ENDIAN = 0x00,
-        BIG_ENDIAN = 0x02
+        BIG_ENDIAN = 0x01
     } Endianness;
 
     /**
@@ -34,20 +34,15 @@ public:
      * @param addressSize           How long is the internal device addresses.
      * @param endianness            The endianness.
      */
-    EepromBasedWiredDevice(unsigned char deviceAddress, unsigned char addressSize, unsigned char endianness);
+    EepromBasedWiredDevice(unsigned char deviceAddress, char addressSize, unsigned char endianness);
 
     /**
      * Public constructor
-     *
-     * @param deviceAddress         The wire address.
-     * @param addressSize           How long is the internal device addresses.
      */
-    EepromBasedWiredDevice(unsigned char deviceAddress, unsigned char addressSize);
+    EepromBasedWiredDevice(unsigned char deviceAddress, char addressSize);
 
     /**
      * Public constructor
-     *
-     * @param deviceAddress         The wire address.
      */
     EepromBasedWiredDevice(unsigned char deviceAddress);
 
@@ -76,14 +71,14 @@ public:
      *
      * @param addressSize
      */
-    void setAddressSize(unsigned char addressSize);
+    void setAddressSize(char addressSize);
 
     /**
      * Gets the address size.
      *
      * @returm addressSize
      */
-    unsigned char getAddressSize();
+    char getAddressSize();
 };
 
 #endif /* __ARDUINO_DRIVER_EEPROM_BASED_WIRED_DEVICE_H__ */

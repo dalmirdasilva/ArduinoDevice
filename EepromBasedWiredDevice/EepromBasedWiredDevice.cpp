@@ -2,11 +2,11 @@
 #include <Wire.h>
 #include "EepromBasedWiredDevice.h"
 
-EepromBasedWiredDevice::EepromBasedWiredDevice(unsigned char deviceAddress, unsigned char addressSize, unsigned char endianness)
+EepromBasedWiredDevice::EepromBasedWiredDevice(unsigned char deviceAddress, char addressSize, unsigned char endianness)
         : WiredDevice(deviceAddress), addressSize(addressSize), endianness(endianness) {
 }
 
-EepromBasedWiredDevice::EepromBasedWiredDevice(unsigned char deviceAddress, unsigned char addressSize)
+EepromBasedWiredDevice::EepromBasedWiredDevice(unsigned char deviceAddress, char addressSize)
         : EepromBasedWiredDevice(deviceAddress, addressSize, LITTLE_ENDIAN) {
 }
 
@@ -16,8 +16,8 @@ EepromBasedWiredDevice::EepromBasedWiredDevice(unsigned char deviceAddress)
 
 void EepromBasedWiredDevice::writeBlock(unsigned int address, unsigned char* buf, int len) {
     Wire.beginTransmission(getDeviceAddress());
-    for (unsigned char i = addressSize - 1; i >= 0; i--) {
-        Wire.write((unsigned char) (address >> (i * 8)) & 0xff);
+    for (char i = addressSize; i > 0; i--) {
+        Wire.write((unsigned char) (address >> ((i - 1) * 8)) & 0xff);
     }
     for (int i = 0; i < len; i++) {
         Wire.write(buf[i]);
@@ -30,14 +30,14 @@ void EepromBasedWiredDevice::readBlock(unsigned int address, unsigned char* buf,
     char tries;
     unsigned char last = len - 1;
     Wire.beginTransmission(getDeviceAddress());
-    for (unsigned char i = addressSize - 1; i >= 0; i--) {
-        Wire.write((unsigned char) (address >> (i * 8)) & 0xff);
+    for (char i = addressSize; i > 0; i--) {
+        Wire.write((unsigned char) (address >> ((i - 1) * 8)) & 0xff);
     }
     Wire.endTransmission();
     delay(EEPROM_BASED_WIRED_DEVICE_AFTER_WRITE_DELAY);
     Wire.requestFrom((int) getDeviceAddress(), len);
     for (int i = 0; i < len; i++) {
-    	tries = MAX_RETRIES_ON_READING;
+        tries = MAX_RETRIES_ON_READING;
         while (!Wire.available() && --tries > 0) {
             delayMicroseconds(1);
         }
@@ -48,10 +48,10 @@ void EepromBasedWiredDevice::readBlock(unsigned int address, unsigned char* buf,
     }
 }
 
-void EepromBasedWiredDevice::setAddressSize(unsigned char addressSize) {
+void EepromBasedWiredDevice::setAddressSize(char addressSize) {
     this->addressSize = addressSize;
 }
 
-unsigned char EepromBasedWiredDevice::getAddressSize() {
+char EepromBasedWiredDevice::getAddressSize() {
     return addressSize;
 }
