@@ -27,6 +27,7 @@ void EepromBasedWiredDevice::writeBlock(unsigned int address, unsigned char* buf
 }
 
 void EepromBasedWiredDevice::readBlock(unsigned int address, unsigned char* buf, int len) {
+    char tries;
     unsigned char last = len - 1;
     Wire.beginTransmission(getDeviceAddress());
     for (unsigned char i = addressSize - 1; i >= 0; i--) {
@@ -36,8 +37,13 @@ void EepromBasedWiredDevice::readBlock(unsigned int address, unsigned char* buf,
     delay(EEPROM_BASED_WIRED_DEVICE_AFTER_WRITE_DELAY);
     Wire.requestFrom((int) getDeviceAddress(), len);
     for (int i = 0; i < len; i++) {
-        while (!Wire.available())
-            ;
+    	tries = MAX_RETRIES_ON_READING;
+        while (!Wire.available() && --tries > 0) {
+            delayMicroseconds(1);
+        }
+        if (tries == 0) {
+            return;
+        }
         buf[(endianness == BIG_ENDIAN) ? last - i : i] = Wire.read();
     }
 }

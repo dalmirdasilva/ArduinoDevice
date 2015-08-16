@@ -15,6 +15,8 @@
 
 class EepromBasedWiredDevice: public WiredDevice {
 
+    const static char MAX_RETRIES_ON_READING = 0x7f;
+
     unsigned char addressSize;
     bool endianness;
 
