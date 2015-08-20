@@ -22,10 +22,10 @@ class EepromBasedWiredDevice: public WiredDevice {
 
 public:
 
-    enum {
+    enum Endianness {
         LITTLE_ENDIAN = 0x00,
         BIG_ENDIAN = 0x01
-    } Endianness;
+    };
 
     /**
      * Public constructor
@@ -47,13 +47,19 @@ public:
     EepromBasedWiredDevice(unsigned char deviceAddress);
 
     /**
+     * Virtual destructor;
+     */
+    virtual ~EepromBasedWiredDevice() {
+    }
+
+    /**
      * Writes a block of bytes separately by pages to the device.
      *
      * @param address
      * @param buf
      * @param len
      */
-    void writeBlock(unsigned int address, unsigned char* buf, int len);
+    virtual void writeBlock(unsigned int address, unsigned char* buf, int len);
 
     /**
      * Reads a block of bytes from the device.
@@ -64,7 +70,7 @@ public:
      * @param buf
      * @param len
      */
-    void readBlock(unsigned int address, unsigned char* buf, int len);
+    virtual int readBlock(unsigned int address, unsigned char* buf, int len);
 
     /**
      * Sets the address size.
