@@ -1,4 +1,4 @@
-ARDUINO_LIB_PATH=/usr/share/arduino/libraries
+ARDUINO_LIB_PATH=~/Arduino/libraries
 LIB_LIST=Device WiredDevice RegisterBasedWiredDevice EepromBasedWiredDevice
 SOURCE_PATH=`pwd`
 
