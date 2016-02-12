@@ -19,33 +19,38 @@ void EepromBasedWiredDevice::writeBlock(unsigned int address, unsigned char* buf
     for (char i = addressSize; i > 0; i--) {
         Wire.write((unsigned char) (address >> ((i - 1) * 8)) & 0xff);
     }
-    for (int i = 0; i < len; i++) {
-        Wire.write(buf[i]);
-    }
+    Wire.write(buf, len);
     Wire.endTransmission();
     delay(EEPROM_BASED_WIRED_DEVICE_AFTER_WRITE_DELAY);
 }
 
 int EepromBasedWiredDevice::readBlock(unsigned int address, unsigned char* buf, int len) {
-    char tries;
+    char tries = MAX_RETRIES_ON_READING;
     int i;
     unsigned char last = len - 1;
     Wire.beginTransmission(getDeviceAddress());
     for (i = addressSize; i > 0; i--) {
         Wire.write((unsigned char) (address >> ((i - 1) * 8)) & 0xff);
     }
-    Wire.endTransmission();
+    char status = Wire.endTransmission();
+    if (status != 0) {
+        return -(status);
+    }
     delay(EEPROM_BASED_WIRED_DEVICE_AFTER_WRITE_DELAY);
     Wire.requestFrom((int) getDeviceAddress(), len);
-    for (i = 0; i < len; i++) {
-        tries = MAX_RETRIES_ON_READING;
-        while (!Wire.available() && --tries > 0) {
-            delayMicroseconds(1);
+    while (!Wire.available() && --tries > 0) {
+        delayMicroseconds(1);
+    }
+    if (tries <= 0) {
+        return -5;
+    }
+    int r = 0;
+    for (i = 0; i < len && Wire.available(); i++) {
+        r = Wire.read();
+        if (r < 0) {
+            break;
         }
-        if (tries == 0) {
-            return i;
-        }
-        buf[(endianness == BIG_ENDIAN) ? last - i : i] = Wire.read();
+        buf[(endianness == BIG_ENDIAN) ? last - i : i] = r & 0xff;
     }
     return i;
 }

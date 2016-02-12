@@ -37,8 +37,13 @@ int RegisterBasedWiredDevice::readRegisterBlock(unsigned char reg, unsigned char
     if (tries == 0) {
         return -5;
     }
+    int r = 0;
     for (i = 0; i < len && Wire.available(); i++) {
-        buf[i] = Wire.read();
+        r = Wire.read();
+        if (r < 0) {
+            break;
+        }
+        buf[i] = r & 0xff;
     }
     return i;
 }

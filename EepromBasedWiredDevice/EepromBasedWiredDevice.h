@@ -66,9 +66,18 @@ public:
      *
      * Sends the address MSB fist.
      *
-     * @param address
-     * @param buf
-     * @param len
+     * @param address       The register address.
+     * @param buf           The buffer where to place read bytes.
+     * @param len           How many bytes to read.
+     * @return              If >= 0: How many bytes were read.
+     *                      If < 0: Error code:
+     *                      <ul>
+     *                          <li>-1: data too long to fit in transmit buffer</li>
+     *                          <li>-2: received NACK on transmit of address</li>
+     *                          <li>-3: received NACK on transmit of data</li>
+     *                          <li>-4: other error</li>
+     *                          <li>-5: timeout</li>
+     *                      </ul>
      */
     virtual int readBlock(unsigned int address, unsigned char* buf, int len);
 
