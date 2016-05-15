@@ -61,6 +61,7 @@ public:
      *
      * @param reg           The register number.
      * @param buf           The buffer where to place read bytes.
+     *                      MSB become LSB inside buffer.
      * @param len           How many bytes to read.
      * @return              If >= 0: How many bytes were read.
      *                      If < 0: Error code:
