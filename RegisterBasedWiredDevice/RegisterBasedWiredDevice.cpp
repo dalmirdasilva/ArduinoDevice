@@ -3,15 +3,7 @@
 #include "RegisterBasedWiredDevice.h"
 
 RegisterBasedWiredDevice::RegisterBasedWiredDevice(unsigned char address)
-        : WiredDevice(address) {
-}
-
-void RegisterBasedWiredDevice::configureRegisterBits(unsigned char reg, unsigned char mask, unsigned char d) {
-    unsigned char n;
-    n = readRegister(reg);
-    n &= ~(mask);
-    n |= d & mask;
-    writeRegister(reg, n);
+        : RegisterBasedDevice(), WiredDevice(address) {
 }
 
 unsigned char RegisterBasedWiredDevice::writeRegisterBlock(unsigned char reg, unsigned char *buff, unsigned char len) {
@@ -46,17 +38,4 @@ int RegisterBasedWiredDevice::readRegisterBlock(unsigned char reg, unsigned char
         buf[i] = r & 0xff;
     }
     return i;
-}
-
-unsigned char RegisterBasedWiredDevice::writeRegister(unsigned char reg, unsigned char d) {
-    return writeRegisterBlock(reg, &d, 1);
-}
-
-int RegisterBasedWiredDevice::readRegister(unsigned char reg) {
-    unsigned char c;
-    int r = readRegisterBlock(reg, &c, 1);
-    if (r < 0) {
-        return r;
-    }
-    return (int) c;
 }

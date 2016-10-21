@@ -1,29 +1,29 @@
 /**
- * Arduino - Register Based Wire Device
- *
- * RegisterBasedWireDevice.cpp
+
+ * Arduino - Register Based SPI Device
  *
  * @author Dalmir da Silva <dalmirdasilva@gmail.com>
  */
 
-#ifndef __ARDUINO_DRIVER_REGISTER_BASED_WIRED_DEVICE_H__
-#define __ARDUINO_DRIVER_REGISTER_BASED_WIRED_DEVICE_H__ 1
+#ifndef __ARDUINO_DRIVER_REGISTER_BASED_SPI_DEVICE_H__
+#define __ARDUINO_DRIVER_REGISTER_BASED_SPI_DEVICE_H__ 1
 
-#include <WiredDevice.h>
+#include <SPIDevice.h>
 #include <RegisterBasedDevice.h>
 
-class RegisterBasedWiredDevice: public RegisterBasedDevice, public WiredDevice {
+class RegisterBasedSPIDevice: public RegisterBasedDevice, public SPIDevice {
 
-    const static unsigned char MAX_RETRIES_ON_READING = 10;
+protected:
+    unsigned char ssPin;
 
 public:
 
     /**
      * Public constructor
      * 
-     * @param address       The wire address.
+     * @param ssPin         The SS pin for the device.
      */
-    RegisterBasedWiredDevice(unsigned char address);
+    RegisterBasedSPIDevice(unsigned char ssPin);
 
     /**
      * Reads values from the device, starting by the reg register.
@@ -55,4 +55,4 @@ public:
     unsigned char writeRegisterBlock(unsigned char reg, unsigned char *buf, unsigned char len);
 };
 
-#endif /* __ARDUINO_DRIVER_REGISTER_BASED_WIRED_DEVICE_H__ */
+#endif /* __ARDUINO_DRIVER_REGISTER_BASED_SPI_DEVICE_H__ */

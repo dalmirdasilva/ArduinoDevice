@@ -1,20 +1,13 @@
 /**
- * Arduino - Register Based Wire Device
- *
- * RegisterBasedWireDevice.cpp
+ * Arduino - Register Based Device
  *
  * @author Dalmir da Silva <dalmirdasilva@gmail.com>
  */
 
-#ifndef __ARDUINO_DRIVER_REGISTER_BASED_WIRED_DEVICE_H__
-#define __ARDUINO_DRIVER_REGISTER_BASED_WIRED_DEVICE_H__ 1
+#ifndef __ARDUINO_DRIVER_REGISTER_BASED_DEVICE_H__
+#define __ARDUINO_DRIVER_REGISTER_BASED_DEVICE_H__ 1
 
-#include <WiredDevice.h>
-#include <RegisterBasedDevice.h>
-
-class RegisterBasedWiredDevice: public RegisterBasedDevice, public WiredDevice {
-
-    const static unsigned char MAX_RETRIES_ON_READING = 10;
+class RegisterBasedDevice {
 
 public:
 
@@ -23,7 +16,39 @@ public:
      * 
      * @param address       The wire address.
      */
-    RegisterBasedWiredDevice(unsigned char address);
+    RegisterBasedDevice();
+
+    /**
+     * Configures a register.
+     *
+     * @param reg           The register number.
+     * @param mask          The mask to be used.
+     * @param d             The value to be used.
+     */
+    void configureRegisterBits(unsigned char reg, unsigned char mask,
+            unsigned char d);
+
+    /**
+     * Writes a value to a register.
+     *
+     * @param reg           The register number.
+     * @param d             The value to be used.
+     */
+    unsigned char writeRegister(unsigned char reg, unsigned char d);
+
+    /**
+     * Reades a value from a register.
+     *
+     * @param reg           The register number.
+     * @return              The register value.
+     *                      if < 0:
+     *                          -1: data too long to fit in transmit buffer
+     *                          -2: received NACK on transmit of address
+     *                          -3: received NACK on transmit of data
+     *                          -4: other error
+     *                          -5: Timeout (max retries)
+     */
+    int readRegister(unsigned char reg);
 
     /**
      * Reads values from the device, starting by the reg register.
@@ -55,4 +80,4 @@ public:
     unsigned char writeRegisterBlock(unsigned char reg, unsigned char *buf, unsigned char len);
 };
 
-#endif /* __ARDUINO_DRIVER_REGISTER_BASED_WIRED_DEVICE_H__ */
+#endif /* __ARDUINO_DRIVER_REGISTER_BASED_DEVICE_H__ */
