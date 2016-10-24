@@ -29,6 +29,26 @@ public:
             unsigned char d);
 
     /**
+     * Configures a register activating the bits.
+     *
+     * @param reg           The register number.
+     * @param mask          The mask to be used.
+     */
+    inline void setRegisterBits(unsigned char reg, unsigned char mask) {
+        configureRegisterBits(reg, mask, 0xff);
+    }
+
+    /**
+     * Configures a register clearing the bits.
+     *
+     * @param reg           The register number.
+     * @param mask          The mask to be used.
+     */
+    inline void clearRegisterBits(unsigned char reg, unsigned char mask) {
+        configureRegisterBits(reg, mask, 0x00);
+    }
+
+    /**
      * Writes a value to a register.
      *
      * @param reg           The register number.
@@ -67,7 +87,7 @@ public:
      *                          <li>-5: timeout</li>
      *                      </ul>
      */
-    int readRegisterBlock(unsigned char reg, unsigned char *buf, unsigned char len);
+    virtual int readRegisterBlock(unsigned char reg, unsigned char *buf, unsigned char len) = 0;
 
     /**
      * Writes a sequence of values to a sequence of registers, starting by the reg address.
@@ -77,7 +97,7 @@ public:
      * @param len           Buffer length.
      * @return              The result of Wire.endTransmission().
      */
-    unsigned char writeRegisterBlock(unsigned char reg, unsigned char *buf, unsigned char len);
+    virtual unsigned char writeRegisterBlock(unsigned char reg, unsigned char *buf, unsigned char len) = 0;
 };
 
 #endif /* __ARDUINO_DRIVER_REGISTER_BASED_DEVICE_H__ */
