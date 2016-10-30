@@ -1,5 +1,5 @@
 ARDUINO_LIB_PATH=~/Arduino/libraries
-LIB_LIST=Device WiredDevice RegisterBasedWiredDevice EepromBasedWiredDevice
+LIB_LIST=WiredDevice SPIDevice RegisterBasedWiredDevice RegisterBasedSPIDevice RegisterBasedDevice EepromBasedWiredDevice
 SOURCE_PATH=`pwd`
 
 all: 
