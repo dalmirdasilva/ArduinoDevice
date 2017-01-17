@@ -23,7 +23,10 @@ unsigned char RegisterBasedSPIDevice::writeRegisterBlock(unsigned char reg,
 
 int RegisterBasedSPIDevice::readRegisterBlock(unsigned char reg, unsigned char *buf,
         unsigned char len) {
+    int n = len;
     if (len > 0) {
+        
+        // Why?
         len--;
         SPI.beginTransaction(SPISettings(SPI_CLOCK_DIV4, MSBFIRST, SPI_MODE0));
         digitalWrite(ssPin, LOW);
@@ -35,5 +38,5 @@ int RegisterBasedSPIDevice::readRegisterBlock(unsigned char reg, unsigned char *
         digitalWrite(ssPin, HIGH);
         SPI.endTransaction();
     }
-    return len;
+    return n;
 }
