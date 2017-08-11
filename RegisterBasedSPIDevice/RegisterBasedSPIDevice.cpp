@@ -25,12 +25,10 @@ int RegisterBasedSPIDevice::readRegisterBlock(unsigned char reg, unsigned char *
         unsigned char len) {
     int n = len;
     if (len > 0) {
-        
-        // Why?
-        len--;
         SPI.beginTransaction(SPISettings(SPI_CLOCK_DIV4, MSBFIRST, SPI_MODE0));
         digitalWrite(ssPin, LOW);
         SPI.transfer(reg);
+        len--;
         for (unsigned char i = 0; i < len; i++) {
             buf[i] = SPI.transfer(reg);
         }
