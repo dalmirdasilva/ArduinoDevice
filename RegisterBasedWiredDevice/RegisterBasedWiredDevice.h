@@ -31,11 +31,11 @@ public:
      * @param reg           The register number.
      * @param buf           The buffer where to place read bytes.
      *                      MSB become LSB inside buffer.
-     * @param len           How many bytes to read.
-     * @return              If >= 0: How many bytes were read.
+     * @param len           How many bytes to read. Up to 32 on most Arduino boards.
+     * @return              If >= 0: How many bytes were read. Possible it will be less than len.
      *                      If < 0: Error code:
      *                      <ul>
-     *                          <li>-1: data too long to fit in transmit buffer</li>
+     *                          <li>-1: data too long to fit in rx buffer</li>
      *                          <li>-2: received NACK on transmit of address</li>
      *                          <li>-3: received NACK on transmit of data</li>
      *                          <li>-4: other error</li>

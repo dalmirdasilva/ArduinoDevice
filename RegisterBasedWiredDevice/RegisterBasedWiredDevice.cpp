@@ -14,8 +14,6 @@ unsigned char RegisterBasedWiredDevice::writeRegisterBlock(unsigned char reg, un
 }
 
 int RegisterBasedWiredDevice::readRegisterBlock(unsigned char reg, unsigned char *buf, unsigned char len) {
-    char tries = MAX_RETRIES_ON_READING;
-    unsigned char i;
     Wire.beginTransmission(getDeviceAddress());
     Wire.write(reg);
     char status = Wire.endTransmission(false);
@@ -23,19 +21,9 @@ int RegisterBasedWiredDevice::readRegisterBlock(unsigned char reg, unsigned char
         return -(status);
     }
     Wire.requestFrom(getDeviceAddress(), len);
-    while (!Wire.available() && --tries > 0) {
-        delayMicroseconds(1);
+    int read = Wire.available();
+    for (int i = 0; i < read; i++) {
+        buf[i] = (unsigned char) Wire.read();
     }
-    if (tries == 0) {
-        return -5;
-    }
-    int r = 0;
-    for (i = 0; i < len && Wire.available(); i++) {
-        r = Wire.read();
-        if (r < 0) {
-            break;
-        }
-        buf[i] = r & 0xff;
-    }
-    return i;
+    return read;
 }
